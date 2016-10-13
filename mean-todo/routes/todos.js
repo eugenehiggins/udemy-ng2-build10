@@ -3,7 +3,6 @@ var router = express.Router();
 var mongojs = require('mongojs');
 var keys = require('../keys.json');
 
-console.log(`mongodb://${keys.user}:${keys.pass}@ds057386.mlab.com:57386/mean-todos`);
 var db = mongojs(`mongodb://${keys.user}:${keys.pass}@ds057386.mlab.com:57386/mean-todos`,['todos']);
 
 // Get Toddos
@@ -83,6 +82,20 @@ router.put('/todo/:id', function(req,res,next){
 	}
 });
 
-// Delete
+// Delete Todo
+router.delete('/todo/:id', function(req,res,next){
+
+		db.todos.remove({
+			_id:mongojs.ObjectId(req.param.id)
+		},'', function(err,result){
+			if(err){
+				res.send(err);
+			} else {
+				res.json(result);
+			}
+
+		});
+	
+});
 
 module.exports = router;
