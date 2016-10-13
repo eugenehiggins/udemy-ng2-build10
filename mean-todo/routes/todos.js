@@ -52,10 +52,11 @@ router.post('/todo', function(req,res,next){
 // Update Todo
 router.put('/todo/:id', function(req,res,next){
 	var todo = req.body;
-	var updObjc = {};
+	var updObj = {};
 
 	if (todo.isCompleted) {
-		updObjc.isCompleted = todo.isCompleted;
+		console.log(todo.isCompleted);
+		updObj.isCompleted = todo.isCompleted;
 	}
 
 	if(todo.text){
@@ -68,7 +69,7 @@ router.put('/todo/:id', function(req,res,next){
 			"error": "Invalid Data"
 		});
 
-	}	else {
+	} else {
 		db.todos.update({
 			_id:mongojs.ObjectId(req.param.id)
 		},updObj, {}, function(err,result){
